@@ -1,0 +1,1 @@
+﻿Images are licensed CC0, public domain, downloaded and modified 2024-0-29

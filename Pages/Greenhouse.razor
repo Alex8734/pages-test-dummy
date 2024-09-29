@@ -1,0 +1,120 @@
+﻿@page "/greenhouse"
+@using HerbalGarden.Core
+
+<PageTitle>Greenhouse</PageTitle>
+
+<h2>Greenhouse</h2>
+
+<div class="container">
+    <div class="messages">
+        <span>@_message</span>
+    </div>
+    <div class="toolbar">
+        <div class="btn-group" role="group" aria-label="Operation Mode">
+            <input type="radio" class="btn-check" name="options" id="plant" checked="@_isPlanting"
+                   @onchange="v => HandleOperationModeChanged(v, true)" autocomplete="off">
+            <label class="btn btn-success" for="plant">Plant</label>
+
+            <input type="radio" class="btn-check" name="options" id="harvest" checked="@(!_isPlanting)"
+                   @onchange="v => HandleOperationModeChanged(v, false)" autocomplete="off">
+            <label class="btn btn-warning" for="harvest">Harvest</label>
+        </div>
+        @if (_isPlanting)
+        {
+            <span>Planting</span>
+        }
+        else
+        {
+            <span>Harvesting</span>
+        }
+        <div class="btn-group" role="group" aria-label="Herb Type">
+            <input type="radio" class="btn-check" name="options" id="basil" checked="@(_selectedHerb == HerbType.Basil)"
+                   @onchange="v => HandleHerbSelectionChanged(v, HerbType.Basil)"
+                   autocomplete="off" disabled="@(!_isPlanting)">
+            <label class="btn btn-primary" for="basil">Basil</label>
+
+            <input type="radio" class="btn-check" name="options" id="mint" checked="@(_selectedHerb == HerbType.Mint)"
+                   @onchange="v => HandleHerbSelectionChanged(v, HerbType.Mint)"
+                   autocomplete="off" disabled="@(!_isPlanting)">
+            <label class="btn btn-primary" for="mint">Mint</label>
+
+            <input type="radio" class="btn-check" name="options" id="rosemary" checked="@(_selectedHerb == HerbType.Rosemary)"
+                   @onchange="v => HandleHerbSelectionChanged(v, HerbType.Rosemary)"
+                   autocomplete="off" disabled="@(!_isPlanting)">
+            <label class="btn btn-primary" for="rosemary">Rosemary</label>
+
+            <input type="radio" class="btn-check" name="options" id="thyme" checked="@(_selectedHerb == HerbType.Thyme)"
+                   @onchange="v => HandleHerbSelectionChanged(v, HerbType.Thyme)"
+                   autocomplete="off" disabled="@(!_isPlanting)">
+            <label class="btn btn-primary" for="thyme">Thyme</label>
+        </div>
+        <div>
+            <span>Time until next day: @_secondsToNextGrowth</span>
+        </div>
+    </div>
+    <div class="pots">
+        @for (var row = 0; row < 6; row++)
+        {
+            <div class="pot-row">
+                @for (var col = 0; col < 8; col++)
+                {
+                    int potIndex = row * 8 + col;
+                    var pot = pots[potIndex];
+                    <div class="pot" @onclick="@(() => HandlePotClicked(pot))">
+                        @if (pot.Herb is not null)
+                        {
+                            switch (pot.Herb.GrowthState)
+                            {
+                                case GrowthState.Sapling:
+                                {
+                                    <img src="/images/sapling.png" alt="sapling" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                case GrowthState.Growing:
+                                {
+                                    <img src="/images/growing.png" alt="growing" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                case GrowthState.Mature:
+                                {
+                                    <img src="/images/mature.png" alt="mature" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                case GrowthState.Wilting:
+                                {
+                                    <img src="/images/wilting.png" alt="wilting" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                default:
+                                {
+                                    <!-- Unknown growth state -->
+
+                                    break;
+                                }
+                            }
+
+                            <span>@pot.Herb.Type</span>
+                        }
+                        else
+                        {
+                            <img src="/images/empty.png" alt="empty pot" width="@ImageSize" height="@ImageSize"/>
+                            <span>empty</span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+
+    const int ImageSize = 50;
+    
+    private static string GetCheckedValue(bool value) => value ? "checked" : string.Empty;
+
+}
