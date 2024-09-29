@@ -1,9 +1,53 @@
 ﻿@page "/orders"
+@using HerbalGarden.Core
 
 <PageTitle>Order</PageTitle>
 
 <h2>Order</h2>
 
+<div class="container">
+    <div>
+        <span>Can add more orders: @FormatYesNo(OrderManagement.CanAddMoreOrders)</span>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Order</h5>
+            <form onsubmit="return false;">
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" @bind="@_amount" min="1" />
+                    <div class="form-text">Enter a number greater than or equal to 1.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="optionSelect" class="form-label">Select a Herb</label>
+                    <select class="form-select" id="optionSelect" @bind="@_herbalType">
+                        <option value="Basil">Basil</option>
+                        <option value="Mint">Mint</option>
+                        <option value="Rosemary">Rosemary</option>
+                        <option value="Thyme">Thyme</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" @onclick="AddOrder" disabled="@(!OrderManagement.CanAddMoreOrders)">
+                    Place Order
+                </button>
+            </form>
+        </div>
+    </div> 
+    <div>
+        <ul>
+            @foreach(var order in OrderManagement.Orders)
+            {
+                if (order is not null)
+                {
+                    <li>@order.OrderNo: @order.Type @order.QuantityFulfilled / @order.QuantityOrdered</li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
 @code {
+    
+    private static string FormatYesNo(bool value) => value ? "Yes" : "No";
     
 }

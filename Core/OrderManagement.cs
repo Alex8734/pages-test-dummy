@@ -5,7 +5,7 @@ public static class OrderManagement
     private const int MaxOrders = 6;
     private static int _nextOrderNo = 1;
     private static int _activeOrders = 0;
-    private static readonly Order?[] orders = new Order?[MaxOrders];
+    public static Order?[] Orders { get; } = new Order?[MaxOrders];
     public static bool CanAddMoreOrders => _activeOrders < MaxOrders;
 
     public static bool AddOrder(HerbType type, int quantity)
@@ -17,7 +17,7 @@ public static class OrderManagement
 
         var order = new Order(_nextOrderNo++, type, quantity, Calendar.CurrentDate);
         int freeSlotIndex = FindFreeSlot();
-        orders[freeSlotIndex] = order;
+        Orders[freeSlotIndex] = order;
         _activeOrders++;
 
         return true;
@@ -31,7 +31,7 @@ public static class OrderManagement
             return null;
         }
 
-        var order = orders[oldestMatchingOrderIndex.Value];
+        var order = Orders[oldestMatchingOrderIndex.Value];
         if (order is null)
         {
             return null;
@@ -44,7 +44,7 @@ public static class OrderManagement
         }
 
         _activeOrders--;
-        orders[oldestMatchingOrderIndex.Value] = null;
+        Orders[oldestMatchingOrderIndex.Value] = null;
 
         return order;
     }
@@ -53,9 +53,9 @@ public static class OrderManagement
     {
         Order? oldestOrder = null;
         int? oldestIndex = null;
-        for (var i = 0; i < orders.Length; i++)
+        for (var i = 0; i < Orders.Length; i++)
         {
-            var order = orders[i];
+            var order = Orders[i];
             if (order is not null && order.Type == type)
             {
                 if (oldestOrder is null || order.OrderDate < oldestOrder.OrderDate)
@@ -71,9 +71,9 @@ public static class OrderManagement
 
     private static int FindFreeSlot()
     {
-        for (var i = 0; i < orders.Length; i++)
+        for (var i = 0; i < Orders.Length; i++)
         {
-            if (orders[i] is null)
+            if (Orders[i] is null)
             {
                 return i;
             }

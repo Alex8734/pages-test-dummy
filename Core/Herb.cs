@@ -14,18 +14,22 @@ public sealed class Herb(HerbType type, DateOnly plantedOn)
 
     private GrowthState GetStateFromGrowthDays(int growthDays)
     {
-        var daysInState = GetDaysInState();
-        if (growthDays <= daysInState.DaysSapling)
+        (int saplingDays, int growingDays, int matureDays) = GetDaysInState();
+        if (growthDays <= saplingDays)
         {
             return GrowthState.Sapling;
         }
 
-        if (growthDays <= daysInState.DaysGrowing)
+        growthDays -= saplingDays;
+
+        if (growthDays <= growingDays)
         {
             return GrowthState.Growing;
         }
 
-        return growthDays <= daysInState.DaysMature
+        growthDays -= growingDays;
+
+        return growthDays <= matureDays
             ? GrowthState.Mature
             : GrowthState.Wilting;
     }

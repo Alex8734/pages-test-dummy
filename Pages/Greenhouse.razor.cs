@@ -21,6 +21,7 @@ public sealed partial class Greenhouse : IDisposable
     private DateTime? _lastGrowth = null;
     private int _secondsToNextGrowth = SecondsPerGrowthDay;
 
+    // needed for the timer, but won't be discussed, we just write it down to make it work and don't worry about it
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -57,7 +58,7 @@ public sealed partial class Greenhouse : IDisposable
         StateHasChanged();
     }
 
-    public void Grow(DateOnly onDate)
+    private void Grow(DateOnly onDate)
     {
         for (var i = 0; i < pots.Length; i++)
         {
@@ -85,6 +86,10 @@ public sealed partial class Greenhouse : IDisposable
         }
 
         _isPlanting = isPlanting;
+        if (isPlanting)
+        {
+            _selectedHerb = HerbType.Basil;
+        }
     }
 
     private void HandleHerbSelectionChanged(ChangeEventArgs changeEvent, HerbType type)
