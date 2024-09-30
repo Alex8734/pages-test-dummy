@@ -26,7 +26,7 @@ public sealed partial class Greenhouse : IDisposable
     {
         base.OnInitialized();
         _lastGrowth = DateTime.Now;
-        _timer = new Timer(_ => TimerTick(), null, TimeSpan.Zero, TimeSpan.FromSeconds(0.5D));
+        _timer = new Timer(_ => TimerTick(), null, TimeSpan.Zero, TimeSpan.FromSeconds(0.25D));
     }
 
     public void Dispose()
@@ -60,9 +60,8 @@ public sealed partial class Greenhouse : IDisposable
 
     private void Grow(DateOnly onDate)
     {
-        for (var i = 0; i < pots.Length; i++)
+        foreach (var pot in pots)
         {
-            var pot = pots[i];
             pot.Herb?.Grow(onDate);
         }
     }
