@@ -66,7 +66,45 @@
                     int potIndex = row * 8 + col;
                     var pot = pots[potIndex];
                     <div class="pot" @onclick="@(() => HandlePotClicked(pot))">
-                        @if (pot.Herb is not null)
+                        @if (pot.Herb is not null && pot.Herb.Type == HerbType.Hanf)
+                        {
+                            switch (pot.Herb.GrowthState)
+                            {
+                                case GrowthState.Sapling:
+                                {
+                                    <img src="images/sapling_weed.png" alt="sapling" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                case GrowthState.Growing:
+                                {
+                                    <img src="images/growing_weed.png" alt="growing" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                case GrowthState.Mature:
+                                {
+                                    <img src="images/mature_weed.png" alt="mature" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                case GrowthState.Wilting:
+                                {
+                                    <img src="images/wilting_weed.png" alt="wilting" width="@ImageSize" height="@ImageSize"/>
+
+                                    break;
+                                }
+                                default:
+                                {
+                                    <!-- Unknown growth state -->
+
+                                    break;
+                                }
+                                
+                            }
+                            <span>@pot.Herb.Type</span>
+                        }
+                        else if(pot.Herb is not null)
                         {
                             switch (pot.Herb.GrowthState)
                             {
