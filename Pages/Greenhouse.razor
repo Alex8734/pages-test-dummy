@@ -47,6 +47,11 @@
                    @onchange="v => HandleHerbSelectionChanged(v, HerbType.Thyme)"
                    autocomplete="off" disabled="@(!_isPlanting)">
             <label class="btn btn-primary" for="thyme">Thyme</label>
+            
+            <input type="radio" class="btn-check" name="options" id="hanf" checked="@(_selectedHerb == HerbType.Hanf)"
+                   @onchange="v => HandleHerbSelectionChanged(v, HerbType.Hanf)"
+                   autocomplete="off" disabled="@(!_isPlanting)">
+            <label class="btn btn-primary" for="hanf">Hanf</label>
         </div>
         <div>
             <span>Time until next day: @_secondsToNextGrowth</span>

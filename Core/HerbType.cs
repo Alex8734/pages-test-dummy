@@ -5,5 +5,6 @@ public enum HerbType
     Basil,
     Mint,
     Rosemary,
-    Thyme
+    Thyme,
+    Hanf
 }
