@@ -18,4 +18,4 @@ CAUTION: If the repository is owned by an organization (classrooms!) the organiz
 
 == Further Changes
 
-Once the initial setup works, you can make any changes or additions to the blazor application, commit and push again, and the deployed pages will be updated automatically.
+Once the initial setup works, you can make any changes or additions to the blazor application, commit and push again, and the deployed pages will be updated automatically. 
