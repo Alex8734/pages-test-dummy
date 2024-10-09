@@ -43,7 +43,7 @@ public sealed class Herb(HerbType type, DateOnly plantedOn)
                    HerbType.Mint     => new GrowthDays(3, 5, 7),
                    HerbType.Rosemary => new GrowthDays(4, 10, 12),
                    HerbType.Thyme    => new GrowthDays(1, 8, 20),
-                     HerbType.Hanf     => new GrowthDays(3, 10, 18),
+                     HerbType.Hanf     => new GrowthDays(3, 6, 12),
                    // we don't know exceptions yet
                    _ => new GrowthDays(-1, -1, -1)
                };
